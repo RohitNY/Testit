@@ -1,0 +1,26 @@
+<div class="input-group col-md-12" tabindex="-1" ng-blur="ctrl.onBlur()">
+    <md-button class="md-accent md-raised labelButton" ng-click="ctrl.toggleDisplayGroups()">{{buttonText}}</md-button>
+
+    <div ng-if="shouldDisplay">
+        <div style="width:100%;" ng-repeat="group in groups track by $index">
+            <!-- <span ng-repeat="question in group.questions">
+                        <ehr-controls group="subQuestionGroup" ques="question"></ehr-controls>
+                    </span> -->
+            <ehr-section group="group"></ehr-section>
+
+            <md-button class="md-fab md-mini md-primary " aria-label="Mini FAB" ng-click="ctrl.removeRow($index)">
+                <md-tooltip md-direction="bottom">
+                    Remove
+                </md-tooltip>
+                <i class="fa fa-remove"></i>
+            </md-button>
+        </div>
+        <md-button class="md-fab " aria-label="Mini FAB" ng-click="ctrl.addNewRow(true)">
+            <md-tooltip md-direction="bottom">
+                Add
+            </md-tooltip>
+            <i class="fa fa-plus"></i>
+        </md-button>
+    </div>
+
+</div>

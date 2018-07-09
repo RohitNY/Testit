@@ -1,0 +1,104 @@
+<ng-form name="contentForm">
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ehr-loader ng-if=" isProcessing"></ehr-loader>
+
+        <div ng-if=" !isProcessing">
+            <!-- <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+
+            <div class="toggle-button toggle-button--aava">
+                <input id="toggleButton2" type="checkbox" checked>
+                <label for="toggleButton2" data-on-text="On" data-off-text="Off"></label>
+                <div class="toggle-button__icon"></div>
+            </div>
+            <a  data-toggle="popover" title="Popover Header"  data-content="Some content inside the popover">Toggle popover</a>
+           
+                <ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+                <button id="popTemplate" type="button" class="btn btn-success waves-light" popoverTitle="Dynamic html inside" [mdbPopover]="popTemplate" mdbRippleRadius>
+                  Show me popover with html
+                </button>
+                <button type="button" class="btn btn-default waves-light" 
+                        mdbPopover="And here some amazing content. It's very engaging. Right?" 
+                        placement="bottom" 
+                        popoverTitle="Popover on bottom" mdbRippleRadius>
+                  Popover on bottom
+                </button> -->
+            <div class="tabbable">
+                <!-- Only required for left/right tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-toggle="tab" ng-click="ctrl.SetActiveTab('basicSection')" id="basicSectionTab">Basic</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="tab" ng-click="ctrl.SetActiveTab('pregnancySection')" id="pregnancySectionTab">Pregnancy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="tab" ng-click="ctrl.SetActiveTab('pastPregnanciesSection')" id="pastPregnanciesSectionTab">Past Pregnancies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="tab" ng-click="ctrl.SetActiveTab('healthSection')" id="healthSectionTab">Health</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="tab" ng-click="ctrl.SetActiveTab('summarySection')" id="summarySectionTab">Summary</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane" ng-class="{active: currentTab=='basicSection'}" id="basicSection" class="validate-form">
+                        <p>
+                            <ng-form name="basicSectionForm" id="basicSectionform" ng-show="currentTab=='basicSection'">
+                                <ehr-basic-section all-question-groups="allQuestionGroupsWithQuestions"></ehr-basic-section>
+                            </ng-form>
+                        </p>
+                    </div>
+                    <div class="tab-pane"  ng-class="{active: currentTab=='pregnancySection'}" id="pregnancySection">
+                        <p>
+                            <ng-form name="pregnancySectionForm" id="pregnancySectionform" ng-show="currentTab=='pregnancySection'">
+                                <ehr-pregnancy all-question-groups="allQuestionGroupsWithQuestions"></ehr-pregnancy>
+                            </ng-form>
+                        </p>
+                    </div>
+                    <div class="tab-pane" ng-class="{active: currentTab=='pastPregnanciesSection'}" id="pastPregnanciesSection">
+                        <p>
+                            <ng-form name="pastPregnanciesSectionForm" id="pastPregnanciesSectionform" ng-show="currentTab=='pastPregnanciesSection'">
+                                <ehr-past-pregnancy all-question-groups="allQuestionGroupsWithQuestions" all-groups="allQuestionGroups"></ehr-past-pregnancy>
+                            </ng-form>
+                        </p>
+                    </div>
+                    <div class="tab-pane" ng-class="{active: currentTab=='healthSection'}" id="healthSection">
+                        <p>
+                            <ng-form name="healthSectionForm" id="healthSectionform" ng-show="currentTab=='healthSection'">
+                                <ehr-health all-question-groups="allQuestionGroupsWithQuestions"></ehr-health>
+                            </ng-form>
+                        </p>
+                    </div>
+                    <div class="tab-pane" ng-class="{active: currentTab=='summarySection'}" id="summarySection" >
+                            <p>
+                                <ng-form name="summarySectionForm" id="summarySectionform" ng-show="currentTab=='summarySection'">
+                                    <ehr-summary all-question-groups="allQuestionGroupsWithQuestions"></ehr-summary>
+                                </ng-form>
+                            </p>
+                        </div>
+                </div>
+            </div>
+
+            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;height:80px" ng-show="displaySaveButton">
+                <a class="btn-floating btn-lg btn-danger waves-effect waves-light" ng-click="ctrl.save(contentForm)">
+                        <md-tooltip
+                        md-direction="bottom">
+                        Save Details
+                      </md-tooltip>
+                    <i class="fa fa-save"></i>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</ng-form>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>

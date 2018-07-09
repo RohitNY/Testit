@@ -1,0 +1,112 @@
+<br/>
+<h6 style="margin-left: 6px;color:darkcyan;">{{title}}</h6>
+
+<div ng-if="!isEdit">
+    <button class="btn btn-lg btn-danger" ng-click="ctrl.addPregnancy()">Add Pregnancy</button>
+    <br/>
+    <div ng-class="{'card-columns': groupsToDisplay.length > 4 }" style="column-gap: 1.50rem;">
+        <span ng-repeat="group in groupsToDisplay track by $index">
+            <div class="card card-cascade">
+
+                <!--Card image-->
+                <div class="view gradient-card-header blue-gradient">
+                    <h2 class="h2-responsive">{{ctrl.ordinalSuffixOf($index + 1) + group.title}}</h2>
+                    <p>Fetuses : {{group.numberOfFetues}}</p>
+                </div>
+                <!--/Card image-->
+
+                <!--Card content-->
+                <div class="card-body text-center" ng-repeat="subGroup in group.subGroups">
+
+                    <p class="card-text" >
+                        <p>
+                            <i>{{subGroup.summary}}</i>
+                        </p>
+                        <ul class="list-group list-group-flush">
+                            <li ng-repeat="ans in subGroup.answers" class="list-group-item">
+                                <span>
+                                    <strong>{{ans.title}} </strong>
+                                </span> :
+                                <span>{{ans.answer}}</span>
+                            </li>
+                        </ul>
+
+                    </p>
+
+                </div>
+                <span style="display: flex;direction: rtl;">
+                    <md-button class="md-fab md-mini" aria-label="Mini FAB" ng-click="ctrl.onDelete(group.id)">
+                        <md-tooltip md-direction="bottom">
+                            Delete
+                        </md-tooltip>
+                        <i class="fa fa-trash"></i>
+                    </md-button>
+                    <md-button class="md-fab md-mini md-primary" aria-label="Mini FAB" ng-click="ctrl.onEdit(group.id)">
+                        <md-tooltip md-direction="bottom">
+                            Edit
+                        </md-tooltip>
+                        <i class="fa fa-edit"></i>
+                    </md-button>
+                </span>
+                <!--/.Card content-->
+
+            </div>
+        </span>
+    </div>
+</div>
+<!-- <ehr-panel question-groups="groups" ng-if="isEdit"></ehr-panel> -->
+
+<div id="accordion" role="tablist" aria-multiselectable="true" ng-if="isEdit">
+    <div ng-repeat="questionGroup in groups">
+        <br/>
+        <div class="card">
+            <div class="card-header" role="tab" id="title{{questionGroup.Id}}">
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{questionGroup.Id}}" aria-expanded="true" aria-controls="title{{questionGroup.Id}}">
+                        {{questionGroup.Title}}
+                    </a>
+                </h5>
+            </div>
+            <div id="{{questionGroup.Id}}" class="collapse" ng-class="{'show':questionGroup.IsOpen}" role="tabpanel" aria-labelledby="title{{questionGroup.Id}}">
+                <div class="card-block" style="padding: 10px 0px 20px 0px;">
+                    <!-- <span ng-repeat="ques in group.questions" ng-init="questionIndex = $index" style="margin:10px 0px"> -->
+                    <div class="input-group col-md-4" style="display:inline-flex" ng-if="mainQues.hasCombo">
+                        <label for="{{mainQues.Id}}" class="custom-label">{{mainQues.Title}}</label>
+                        <select class="form-control" id="{{mainQues.Id}}" name="{{mainQues.Id}}" ng-options="value for value in ctrl.GetArray(mainQues.comboOptions)"
+                            aria-describedby="{{mainQues.Id}}Addon" ng-model="mainQues.Answer" ng-readonly="mainQues.isReadOnly"
+                            ng-required="true" ng-required="mainQues.isRequired" style="height:auto;" ng-selected="{{value===mainQues.defaultValue}}"
+                            ng-change="ctrl.setNumber(mainQues.Answer)">
+                        </select>
+
+                    </div>
+
+                    <!-- <span ng-if="ques.subQuestion"> -->
+                    <div ng-repeat="i in numberOfFetues track by $index">
+                        <ehr-outcome main-group="groups[0]" main-ques="mainQues" selected-answer-group="currentAnswerGroup" 
+                        
+                        sub-group-index ="$index" ng-if="isEdit"></ehr-outcome>
+                    
+                    </div>
+                    <div class="card-footer">
+                        <span style="display: flex;direction: rtl;">
+                            <md-button class="md-fab " aria-label="Mini FAB" ng-click="ctrl.onCancel()">
+                                <md-tooltip md-direction="bottom">
+                                    Cancel
+                                </md-tooltip>
+                                <i class="fa fa-close"></i>
+                            </md-button>
+                            <md-button class="md-fab md-primary " aria-label="Mini FAB" ng-click="ctrl.onSave(pastPregnanciesSectionForm)">
+                                <md-tooltip md-direction="bottom">
+                                    Save
+                                </md-tooltip>
+                                <i class="fa fa-save"></i>
+                            </md-button>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="input-group col-md-4" style="display:inline-flex">
+  <label for="{{subQuestion.id}}_{{$index}}" class="custom-label">{{subQuestion.title}}</label>
+  <select class="form-control" id="{{subQuestion.id}}_{{$index}}" name="{{subQuestion.id}}" ng-options="value for value in subQuestion.values"
+    aria-describedby="{{subQuestion.id}}_{{$index}}Addon" ng-model="subQuestion.answer" ng-readonly="subQuestion.isReadOnly"
+    ng-required="true" ng-required="subQuestion.IsRequired" style="height:auto;" ng-selected="{{value==subQuestion.defaultValue}}"
+    ng-change="ctrl.onSelectionOfOutcome(subQuestion.answer)">
+  </select>
+
+</div>
+<div ng-repeat="subQuestionGroup in subQuestionGroups track by $index">
+  <div class="card" style="margin:10px;">
+    <div id="{{subQuestionGroup.Id}}" class="collapse show" role="tabpanel" aria-labelledby="title{{subQuestionGroup.Id}}">
+      <div class="card-block" style="padding: 10px 0px 20px 0px;">
+        <ehr-section group="subQuestionGroup" prefix="subGroupIndex"></ehr-section>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <ehr-section group="subQuestionGroup"></ehr-section> -->

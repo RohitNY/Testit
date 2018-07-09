@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<link rel="stylesheet" type="text/css" href="css/util.css" />
+<div class="limiter">
+	<div class="container-login" style="background-image: url('../images/bg-01.jpg');">
+		<span class="wrap-login1" style="
+    		width: 100%;color: #d2c7b9;
+    		position: relative;display: flex;">{{practiceName}}</span>
+		<div class="wrap-login p-l-110 p-r-110 p-t-62 p-b-33">
+			<form id="loginForm" ng-submit="ctrl.login()" class="login-form validate-form flex-sb flex-w">
+				<span class="login-form-title p-b-30">
+					{{title}}
+				</span>
+				<h5 class="login-welcome">
+					{{welcomeNote}}
+				</h5>
+				<div class="p-t-31 p-b-9">
+					<span class="txt1">
+						Username
+					</span>
+				</div>
+				<div class="wrap-input validate-input" data-validate="Username is required">
+					<input class="input-field" type="email" name="username" ng-required="true" ng-model="username" placeholder="Enter username">
+					<span class="focus-input"></span>
+				</div>
+
+				<div class="p-t-13 p-b-9">
+					<span class="txt1">
+						Password
+					</span>
+				</div>
+				<div class="wrap-input validate-input" data-validate="Password is required">
+					<input class="input-field" type="password" name="pass" ng-required="true" ng-model="password" placeholder="Enter password">
+					<span class="focus-input"></span>
+				</div>
+				<div class="container-login-form-btn m-t-27">
+					<!-- ng-disabled="!username || !password" -->
+					<button class="login-form-btn" type="submit">
+						Sign In
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

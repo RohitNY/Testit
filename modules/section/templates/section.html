@@ -1,0 +1,18 @@
+<span ng-repeat="ques in group.questions" ng-init="questionIndex = $index" style="margin:10px 0px">
+    <ehr-mbt4 id="{{ques.Id}}_{{$index}}_mbt" group="group" prefix="prefix" ques="ques" question-id="{{ques.uniqueId}}"
+    ng-if="ques.multiButtonType === 4 || ques.multiButtonType === 2" ng-model="ques.Answer"></ehr-mbt4>
+    <!-- <ehr-mbt2 id="{{ques.Id}}_{{$index}}_mbt" ng-model="ques.Answer" group="group"
+     ques="ques" ng-if="ques.multiButtonType === 2"></ehr-mbt2> -->
+    <ehr-controls group="group" ques="ques" prefix="prefix" ng-if="ques.multiButtonType !== 4 && ques.multiButtonType !== 2"></ehr-controls>
+    <!-- <span ng-if="ques.temp">  -->
+    <span ng-repeat="key in ctrl.GetKeys(ques.subQues)" ng-init="ctrl.setFlag(ques, key, questionIndex, $index)">
+        <span ng-if="show[questionIndex +'_'+$index]">
+            <span ng-repeat="subQuestion in ques.subQues[key]">
+                <ehr-mbt4 group="group" ques="subQuestion"  prefix="prefix" ng-if="subQuestion.multiButtonType === 4"></ehr-mbt4>
+                <ehr-mbt2 group="group" ques="subQuestion" prefix="prefix" ng-if="subQuestion.multiButtonType === 2"></ehr-mbt2>
+                <ehr-controls group="group" ques="subQuestion" prefix="prefix" ng-if="subQuestion.multiButtonType !== 4 && subQuestion.multiButtonType !== 2"></ehr-controls>
+            </span>
+        </span>
+    </span>
+     <!-- </span>  -->
+</span>

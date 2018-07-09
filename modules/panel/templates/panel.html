@@ -1,0 +1,19 @@
+<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div ng-repeat="questionGroup in questionGroups">
+    <br/>
+    <div class="card">
+      <div class="card-header" role="tab" id="title{{questionGroup.Id}}">
+        <h5 class="mb-0">
+          <a data-toggle="collapse" data-parent="#accordion" href="#{{questionGroup.Id}}" aria-expanded="true" aria-controls="title{{questionGroup.Id}}">
+            {{questionGroup.Title}}
+          </a>
+        </h5>
+      </div>
+      <div id="{{questionGroup.Id}}" class="collapse" ng-class="{'show':questionGroup.IsOpen}" role="tabpanel" aria-labelledby="title{{questionGroup.Id}}">
+        <div class="card-block" style="padding: 10px 0px 20px 0px;">
+          <ehr-section group="questionGroup"></ehr-section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

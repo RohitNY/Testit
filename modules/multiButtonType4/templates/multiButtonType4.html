@@ -1,0 +1,31 @@
+<div class="input-group col-md-12" tabindex="-1" ng-blur="ctrl.onBlur()">
+    <label for="{{ques.Id}}" class="custom-label">{{ques.Title}}</label>
+
+    <span ng-repeat="chunk in ctrl.chunkArray(ques.comboOptions, true, 4) track by $index" style="width:100%;">
+        <span ng-repeat="value in chunk">
+            <button type="button" class="btn btn-light-blue" style="width:23.5%;" id="{{value}}" data-toggle="collapse" data-target="#extend{{$index}}"
+                ng-click="ctrl.setSelectedValue(value)">{{value}}</button>
+        </span>
+        <div ng-if="chunk.includes(selectedValue)" class="col-md-12">
+            <div style="width:100%;" ng-repeat="group in groups track by $index">
+                <!-- <span ng-repeat="question in group.questions">
+                    <ehr-controls group="subQuestionGroup" ques="question"></ehr-controls>
+                </span> -->
+                <ehr-section group="group"></ehr-section>
+                
+                <md-button class="md-fab md-mini md-primary " aria-label="Mini FAB" ng-click="ctrl.removeRow($index)">
+                    <md-tooltip md-direction="bottom">
+                        Remove
+                    </md-tooltip>
+                    <i class="fa fa-remove"></i>
+                </md-button>
+            </div>
+            <md-button class="md-fab " aria-label="Mini FAB" ng-click="ctrl.addNewRow(selectedValue, true)">
+                <md-tooltip md-direction="bottom">
+                    Add
+                </md-tooltip>
+                <i class="fa fa-plus"></i>
+            </md-button>
+        </div>
+    </span>
+</div>

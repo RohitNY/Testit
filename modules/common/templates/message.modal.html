@@ -1,0 +1,9 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">{{title || ""}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    {{message}}
+</div>
+<div class="modal-footer" ng-if="showCloseButton">
+    <button class="btn btn-md btn-indigo" type="button" ng-click="$dismiss()">Close</button>
+</div>

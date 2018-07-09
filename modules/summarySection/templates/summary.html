@@ -1,0 +1,91 @@
+<br/>
+<br/>
+<div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+                <div class="card-header gradient-blue-card-header" role="tab" id="summary">
+                        <h5 class="mb-0">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#summary" aria-expanded="true" aria-controls="titleSummary" style="color:white; font-size:1.25rem;">
+                                        Summary
+                                </a>
+                        </h5>
+                </div>
+                <div id="summary" class="collapse show" role="tabpanel" aria-labelledby="titleSummary">
+                        <div class="card-block">
+                                <!-- <span ng-repeat="ques in questions track by $index" ng-init="questionIndex = $index">
+                                <div class="md-form col-md-3 " style="display:inline-flex">
+
+                                        <label ng-class="{ 'active':!!ques.Answer}" for="{{ques.Id}}">{{ques.Title || ques.waterMark}}</label>
+
+                                        <input name="{{ques.Id}}" type="text" class="form-control" id="{{ques.Id}}" aria-describedby="{{ques.Id}}Addon" ng-model="ques.Answer"
+                                                ng-readonly="true" style="color:white;border-bottom: 1px solid #314150;">
+                                </div>
+                        </span> -->
+
+                                <div id="subAccordion" role="tablist" aria-multiselectable="true">
+                                        <div ng-repeat="group in allGroups track by $index">
+
+                                                <div class="card" style="margin:10px !important">
+                                                        <div class="card-header" role="tab" id="title{{group.id}}" style="background-color:black;">
+                                                                <h5 class="mb-0">
+                                                                        <a data-toggle="collapse" data-parent="#subAccordion" href="#{{group.id}}" aria-expanded="true" aria-controls="title{{questionGroup.Id}}">
+                                                                                {{group.title}}
+                                                                        </a>
+                                                                </h5>
+                                                        </div>
+                                                        <div id="{{group.id}}" class="collapse show" role="tabpanel" aria-labelledby="title{{group.id}}">
+                                                                <div class="card-block" style="padding: 10px 0px 20px 0px;">
+                                                                        <!--#3c2b2b;-->
+                                                                        <span ng-repeat="ques in group.answers track by $index" ng-init="questionIndex = $index">
+                                                                                <div class="col-md-{{ctrl.CalculateControlWidth(ques.answer)}}" style="display:inline-flex;margin-top:10px; height:60px;">
+                                                                                        <md-input-container class="md-docs-dark-theme">
+                                                                                                <label class="active labelCheckbox"
+                                                                                                 for="{{ques.id}}">{{ctrl.ellipsis(ques.title)}}</label>
+
+                                                                                                <input name="{{ques.id}}" type="text"  id="{{ques.id}}" aria-describedby="{{ques.id}}Addon" ng-model="ques.answer"
+                                                                                                        ng-readonly="true">
+
+                                                                                                <md-tooltip md-direction="bottom" ng-if="ques.title">
+                                                                                                        {{ques.title|| " "}}
+                                                                                                </md-tooltip>
+                                                                                        </md-input-container>
+                                                                                </div>
+                                                                        </span>
+                                                                        <h4 ng-if="group.numberOfFetues"
+                                                                        style="display: inline-flex; justify-content:center;width:100%"> Number of Fetus : {{group.numberOfFetues}}</h4>
+                                                                        
+                                                                        <span ng-repeat="subGroup in group.subGroups track by $index">
+                                                                                <div class="input-group col-md-2">
+                                                                                        <h5  class="custom-label">{{subGroup.summary}}</h5>
+                                                                                </div>
+                                                                                <span ng-repeat="ques in subGroup.answers track by $index">
+                                                                                        <div class="col-md-{{ctrl.CalculateControlWidth(ques.answer)}}" style="display:inline-flex;margin-top:10px; height:60px;">
+                                                                                                <md-input-container class="md-docs-dark-theme" style="width:100%;">
+                                                                                                        <label class="active labelCheckbox"
+                                                                                                         for="{{ques.id}}">{{ctrl.ellipsis(ques.title)}}</label>
+        
+                                                                                                        <input name="{{ques.id}}" type="text"  id="{{ques.id}}" aria-describedby="{{ques.id}}Addon" ng-model="ques.answer"
+                                                                                                                ng-readonly="true">
+        
+                                                                                                        <md-tooltip md-direction="bottom" ng-if="ques.title">
+                                                                                                                {{ques.title|| " "}}
+                                                                                                        </md-tooltip>
+                                                                                                </md-input-container>
+                                                                                        </div>
+                                                                                </span>
+                                                                        </span>
+                                                                        <!-- <span ng-repeat="group in pastPregnancyGroups track by $index">
+                                                                        <span ng-repeat="subGroup in group.subGroups track by $index">
+                                                                                
+                                                                        </span>
+                                                                                
+
+                                                                        </span> -->
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</div>

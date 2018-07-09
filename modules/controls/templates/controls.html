@@ -1,0 +1,156 @@
+<br ng-if="ques.putOnNewLine"/>
+
+<span ng-if="ques.printQuestions">
+        <div class="md-form  validate-input" style="display:inline-flex; margin: 12px 15px;">
+                <!-- <md-input-container class="mdInputContainer"> -->
+                <label class="active" for="{{ques.Id}}">{{ques.Title || ques.waterMark}}</label>
+                <div ng-repeat="q in ques.printQuestions track by $index" style="display:inline-flex">
+                        <span ng-if="!!q.hasTextBox">
+                                <input ng-if="ques.hasTextBox" name="{{q.Id}}" type="{{ctrl.getType(q)}}" class="form-control" id="{{q.Id}}" placeholder="{{q.waterMark||q.units}}"
+                                        aria-describedby="{{q.Id}}Addon" ng-model="q.Answer" question-id="{{q.uniqueId}}" ng-required="q.isRequired"
+                                        answer-group="q.answerGroup" answer-id="q.answerId"
+                                        ng-readonly="ques.isReadOnly">
+                                <span ng-if="q.Answer" class="units">{{q.units}}</span>
+                        </span>
+                        <span ng-if="!!q.hasCombo">
+                                <md-input-container class="mdInputContainer">
+                                        <md-select class="" id="{{q.Id}}" name="{{q.Id}}" aria-describedby="{{q.Id}}Addon" ng-model="q.Answer" question-id="{{q.uniqueId}}"
+                                        answer-group="q.answerGroup" answer-id="q.answerId"       
+                                        ng-readonly="q.isReadOnly" ng-required="q.isRequired" aria-label="{{q.Id}}">
+                                                <md-option ng-value="value" ng-selected="{{value===q.defaultValue}}" ng-repeat="value in ctrl.GetArray(q.comboOptions) track by $index">{{value}}</md-option>
+                                        </md-select>
+                                </md-input-container>
+                        </span>
+                        <md-tooltip md-direction="right" ng-if="q.units || q.Title">
+                                {{q.units|| q.Title}}
+                        </md-tooltip>
+                        &nbsp;&nbsp;
+                        <div>{{ques.printQuestionDivider}}</div>
+
+                </div>
+                <!-- </md-input-container> -->
+        </div>
+</span>
+<span ng-if="!ques.printQuestions" ng-switch="ques.type">
+        <!-- ques.isLabel -->
+        <div class="input-group col-md-{{ctrl.CalculateControlWidth(ques)}}" 
+        ng-class="{'labelAsHeader': ques.showBottomBorder}"
+        style="display:inline-flex" ng-switch-when="label">
+                <label for="{{ques.Id}}" class="custom-label">{{ques.label || ques.text}}</label>
+        </div>
+        <!-- ques.hasTextBox && !ques.multiButtonType -->
+        <div class="layout-column control-container col-md-{{ctrl.CalculateControlWidth(ques)}} validate-input" style="display:inline-flex;"
+                ng-switch-when="text" data-validate="{{ques.Title}} is required">
+                <md-input-container class="mdInputContainer">
+                        <label ng-class="{ 'active':ques.Answer.length > 0}" for="{{ques.Id}}">{{ques.Title || ques.waterMark}}</label>
+
+                        <input name="{{ques.Id}}" type="text" class="" id="{{ques.Id}}" ng-focus="ctrl.AddPlaceholder(ques.Id,ques.waterMark)" ng-blur="ctrl.RemovePlaceholder(ques.Id)"
+                                aria-describedby="{{ques.Id}}Addon" ng-model="ques.Answer" question-id="{{ques.uniqueId}}" ng-required="ques.isRequired"
+                                answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}"
+                                ng-maxlength="ques.maxCharacters" title="{{ques.Title}}" ng-readonly="ques.isReadOnly">
+                        <span ng-if="ques.Answer" class="units">{{ques.units}}</span>
+                </md-input-container>
+        </div>
+        <!-- ques.hasDateTime -->
+        <div class="control-container col-md-{{ctrl.CalculateControlWidth(ques)}}" style="display:inline-flex" ng-switch-when="dateTime">
+                <md-input-container class="mdInputContainer">
+                        <label for="{{ques.Id}}" ng-if="ques.Title" class="custom-label">{{ques.Title}}</label>
+
+                        <md-datepicker name="{{ques.Id}}" id="{{ques.Id}}" ng-model="ques.Answer" question-id="{{ques.uniqueId}}" md-placeholder="{{ques.waterMark||'Enter date'}}"
+                                title="{{ques.Title}}" answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}" ng-required="ques.isRequired" md-mode="{{ques.dateFormat}}" md-hide-icons="{{ques.hideIcon}}"></md-datepicker>
+
+
+                </md-input-container>
+        </div>
+         <!-- ques.hasDateTimeNoCalendarIcon -->
+         <div class="control-container col-md-{{ctrl.CalculateControlWidth(ques)}}" style="display:inline-flex" ng-switch-when="dateTimeWithNoCalendarIcon">
+                <md-input-container class="mdInputContainer">
+                        <label for="{{ques.Id}}" ng-if="ques.Title" class="custom-label">{{ques.Title}}</label>
+
+                        <md-datepicker name="{{ques.Id}}" id="{{ques.Id}}" ng-model="ques.Answer" question-id="{{ques.uniqueId}}" md-placeholder="{{ques.waterMark||'Enter date'}}"
+                               class="noCalendar" title="{{ques.Title}}" answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}" ng-required="ques.isRequired" md-mode="{{ques.dateFormat}}" md-hide-icons="calendar"></md-datepicker>
+
+
+                </md-input-container>
+        </div>
+        <!-- ques.hasYesNo && ques.hasCommentBox -->
+        <div class="input-group col-md-{{ctrl.CalculateControlWidth(ques)}} " style="display:inline-flex;margin-top:2em;" ng-switch-when="yesNoWithComment">
+                <span class="col-md-8" style="padding:0px;">
+                        <label>{{ques.Title}}</label>
+                        <div ng-if="ques.Answer">
+                                <input name="{{ques.Id}}_comment" type="text" class="form-control" id="{{ques.Id}}_comment" placeholder="{{ques.waterMark}}"
+                                        aria-describedby="{{ques.Id}}Addon" ng-model="ques.comment" question-id="{{ques.uniqueId}}"
+                                        title="{{ques.Title}}" answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}" 
+                                         ng-readonly="ques.isReadOnly">
+                        </div>
+                </span>
+                <span >
+                        <div class="toggle-button toggle-button--aava">
+                                <input type="checkbox" id="{{ques.Id}}" title="{{ques.Title}}" ng-required="ques.isRequired" ng-model="ques.Answer" question-id="{{ques.uniqueId}}"
+                                answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}">                                >
+                                <label for="{{ques.Id}}" data-on-text="Yes" data-off-text="No"></label>
+                                <div class="toggle-button__icon"></div>
+                        </div>
+                        <md-tooltip md-direction="bottom" ng-if="ques.Title">
+                                {{ques.Title|| " "}}
+                        </md-tooltip>
+                </span>
+        </div>
+        <!-- ques.hasYesNo && !ques.segmentedControlValues -->
+        <div class="control-container col-md-{{ctrl.CalculateControlWidth(ques)}} " style="display:inline-flex;margin-top:2em;" ng-switch-when="yesNo">
+
+                <span class="{{ctrl.checkforClass()}}" style="padding:0px;">
+                        <label>{{ques.Title}}</label>
+                </span>
+                <span>
+                        <div class="toggle-button toggle-button--aava">
+                                <input type="checkbox" id="{{ques.Id}}" title="{{ques.Title}}" ng-required="ques.isRequired" ng-model="ques.Answer" question-id="{{ques.uniqueId}}"
+                                answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}">
+                                <label for="{{ques.Id}}" data-on-text="Yes" data-off-text="No"></label>
+                                <div class="toggle-button__icon"></div>
+                        </div>
+                        <md-tooltip md-direction="bottom" ng-if="ques.Title">
+                                {{ques.Title|| " "}}
+                        </md-tooltip>
+                </span>
+
+        </div>
+        <!-- ques.hasYesNo && ques.segmentedControlValues -->
+        <div class="input-group col-md-{{ctrl.CalculateControlWidth(ques)}}" style="display:inline-flex" ng-switch-when="yesNoWithCustomValues">
+
+                <label for="{{ques.Id}}" class="labelCheckbox">{{ques.Title}}</label>
+                <div class="btn-group input-group" data-toggle="buttons" ng-readonly="ques.isReadOnly" title="{{ques.Title}}" ng-required="ques.isRequired"
+                        ng-model="ques.Answer" question-id="{{ques.uniqueId}}"
+                        answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}">
+                        <label class="btn btn-md btn-light-blue" ng-repeat="value in ctrl.GetArray(ques.segmentedControlValues)" style="margin-left:3px;">
+                                <input type="radio" class="hidden-radio" name="options" id="{{ques.Id}}-{{value}}" autocomplete="off"> {{value}}
+                        </label>
+                </div>
+        </div>
+        <!-- ques.hasCombo -->
+        <div class="layout-column control-container col-md-{{ctrl.CalculateControlWidth(ques)}}" style="display:inline-flex;" ng-switch-when="combo">
+                <md-input-container class="mdInputContainer">
+                        <label for="{{ques.Id}}" ng-if="ques.Title" class="custom-label">{{ques.Title}}</label>
+                        <md-select class="" id="{{ques.Id}}" name="{{ques.Id}}" aria-describedby="{{ques.Id}}Addon" ng-model="ques.Answer" question-id="{{ques.uniqueId}}"
+                                ng-readonly="ques.isReadOnly" title="{{ques.Title}}" ng-required="ques.isRequired" aria-label="{{ques.Id}}"
+                                answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}">
+                                <md-option ng-value="value" ng-selected="{{value===ques.Answer}}" ng-repeat="value in ctrl.GetArray(ques.comboOptions) track by $index">{{value}}</md-option>
+                        </md-select>
+                </md-input-container>
+                <md-tooltip md-direction="right" ng-if="ques.Title">
+                        {{ques.Title|| " "}}
+                </md-tooltip>
+        </div>
+        <!-- ques.multiButtonType === 1 -->
+        <div class="input-group col-md-12" ng-switch-when="mbt1">
+                <label for="{{ques.Id}}" class="custom-label">{{ques.Title}}</label>
+
+                <span ng-repeat="value in ctrl.GetArray(ques.comboOptions, true)" style="width:25%">
+                        <button type="button" class="btn btn-primary" data-toggle="button" ng-class="{'active' : ctrl.setSelectedValues(ques, value)}"
+                        answer-group="{{ques.answerGroup}}" answer-id="{{ques.answerId}}"       
+                        ng-model="ques.selectedValues" aria-pressed="false" autocomplete="off" style="width:98%;" ng-click="ctrl.onClickOfMultiTypeButton(ques, value)"
+                                id="{{value}}">{{value}}</button>
+        </div>
+        </span>
+        </div>
+</span>
